@@ -1,0 +1,40 @@
+; Create the GUI for recording the keyboard input sequence
+Gui, Add, Text,, Press the record button to start recording
+Gui, Add, Button, gStartRecording, Record
+Gui, Show
+
+return
+
+
+; Start recording the keyboard input sequence
+StartRecording:
+    ; Disable the record button
+    GuiControl, Disable, Record
+
+    ; Clear the previous recorded sequence
+    recorded_sequence := ""
+
+    ; Set the text of the status label
+    GuiControl, Text, 1, Recording... (Press Escape to stop)
+
+    ; Start recording the sequence
+    Loop
+    {
+        ; Get the next keystroke
+        Input, key, L1
+
+        ; Stop recording if the user presses Escape
+        if (key = "{Esc}")
+            break
+
+        ; Add the keystroke to the recorded sequence
+        recorded_sequence .= key
+    }
+
+    ; Show the recorded sequence in a message box
+    MsgBox, The recorded sequence is:`n%recorded_sequence%
+
+    ; Reset the GUI
+    GuiControl, Enable, Record
+    GuiControl, Text, 1, Press the record button to start recording
+    return

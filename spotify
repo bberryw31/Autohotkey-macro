@@ -1,0 +1,15 @@
+CoordMode, Mouse, Window
+
+
+F8::
+{send, r}
+
+	return
+
+
+
+
+}
+return
+ESC::ExitApp
+return

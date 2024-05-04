@@ -1,0 +1,149 @@
+CoordMode, Mouse, Window
+
+Gui, Font, c2D73FF
+Gui, Add, ListView, x10 y25 w450 h480 vLogbox LVS_REPORT, %A_Now%|Activity
+	LV_ModifyCol(1,100)
+Gui, Font, cF4F4F4
+Gui, Add, Text, x10 y515, F3 : Start Macro     ESC : Stop Macro
+Gui, Color, 4E4E4E
+Gui, Show, , Evil_Hunter_Tycoon_Boss&Raid
+
+updatelog(LogString)
+{
+ global Logbox
+ rownumber := LV_Add("", A_Now, LogString) 
+ LV_Modify(rownumber, "Vis") 
+}
+
+A := 0
+B := 0
+C := 0
+D := 0
+
+
+F3::
+{
+	loop
+	{
+		if (A=0)
+		{
+			updatelog("Summoning Boss")
+			mouseclick, l, 510, 170
+			random, int, 2000, 2500
+			sleep %int%
+			A := 1
+			
+			if (D=0)
+			{
+				updatelog("Entering Dungeon")
+				mouseclick, l, 170, 970
+				random, int, 2000, 2500
+				sleep %int%
+				mouseclick, l, 222, 866
+				random, int, 2000, 2500
+				sleep %int%
+				mouseclick, l, 164, 254
+				random, int, 500, 750
+				sleep %int%
+				mouseclick, l, 164, 285
+				random, int, 2000, 2500
+				sleep %int%
+				mouseclick, l, 182, 880
+				random, int, 2000, 2500
+				sleep %int%
+				mouseclick, l, 388, 526
+				random, int, 2000, 2500
+				sleep %int%
+				ImageSearch, vx, vy, 114, 785, 275, 826, *30 green.png
+				
+					if (ErrorLevel = 0)
+					{
+					updatelog("Hunter Selected")
+					mouseclick, l, 200, 820
+					random, int, 2000, 2500
+					sleep %int%
+					mouseclick, l, 170, 970
+					updatelog("Dungeon Started")
+					D := 1
+					}
+				
+					if (ErrorLevel = 1)
+					{
+					updatelog("Hunter Not Selected")
+					mouseclick, l, 360, 815
+					random, int, 2000, 2500
+					sleep %int%
+					mouseclick, l, 170, 970
+					updatelog("Trying Again in a Few Seconds...")
+					}
+					
+				if (A=1)
+				{
+				sleep, 60000
+				A := 3
+				}
+			}
+			
+			if (D=1)
+			{
+				updatelog("Receiving Dungeon Rewards")
+				mouseclick, l, 160, 960
+				random, int, 2000, 2100
+				sleep %int%
+				mouseclick, l, 430, 800
+				random, int, 9000, 10000
+				sleep %int%
+				mouseclick, l, 250, 865
+				random, int, 2000, 2100
+				sleep %int%
+				mouseclick, l, 160, 970
+				random, int, 2000, 2100
+				sleep %int%
+				
+				D := 0
+				
+			if (A=1)
+				{
+				sleep, 60000
+				A := 3
+				}
+			}
+		}
+		if (A>0)
+		{
+			updatelog("Checking Boss")
+			mouseclick, l, 479, 846
+			random, int, 1000, 1100
+			sleep %int%
+			mouseclick, l, 516, 824
+			random, int, 2000, 2500
+			sleep %int%
+			imagesearch, vx, vy, 468, 221, 516, 274, *30 bossready.png
+				if (ErrorLevel = 0)
+				{
+				updatelog("Boss is Ready")
+				A := 0
+				random, int, 2000, 2500
+				sleep %int%
+				}
+				if (ErrorLevel = 1)
+				{
+				updatelog("Boss is NOT Ready")
+				A := 3
+				random, int, 2000, 2500
+				sleep %int%
+			}
+		}
+		
+		if (B=0)
+		{
+			updatelog("Starting Raid")
+		}
+	}
+}
+
+return
+
+ESC::ExitApp
+
+return

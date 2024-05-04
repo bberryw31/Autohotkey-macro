@@ -1,0 +1,8 @@
+CoordMode, Mouse, Screen
+
+random, BossX, 490, 525
+random, BossY, 169, 190
+mouseclick, l, %BossX%, %BossY%
+
+ExitApp
+

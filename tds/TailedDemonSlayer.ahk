@@ -1,0 +1,72 @@
+CoordMode, Mouse, Window
+
+Gui, Font, c2D73FF
+Gui, Add, ListView, x10 y25 w450 h480 vLogbox LVS_REPORT, %A_Now%|Activity
+	LV_ModifyCol(1,100)
+Gui, Font, cF4F4F4
+Gui, Add, Text, x10 y515, F3 : Start Macro     F4 : Stop Macro
+Gui, Color, 4E4E4E
+Gui, Show, , Tailed_Demon_slayer
+
+updatelog(LogString)
+{
+ global Logbox
+ rownumber := LV_Add("", A_Now, LogString) 
+ LV_Modify(rownumber, "Vis") 
+}
+
+Status := Standby
+
+F3::
+{
+	loop
+	{
+		if(Status=Standby)
+		{
+			updatelog("Checking Dungeon")
+			mouseclick, l, 500, 972
+			random, int, 1500, 2000
+			sleep, %int%
+			
+			updatelog("Checking Gem Dungeon")
+			imagesearch, a, b, 277, 421, 345, 451, *70 gemd.png
+			if (errorlevel = 0)
+			{
+				updatelog("Entering Gem Dungeon")
+				mouseclick, l, 300, 500
+				random, int, 1500, 2000
+				sleep, %int%
+				mouseclick, l, 281, 970
+				Status := GemD
+			}
+			if (errorlevel = 1)
+			{
+				
+			}
+			
+		}
+		if(Status=GemD)
+		{
+			errorlevel := 1
+			imagesearch, a, b, 231, 346, 320, 435, *50 gemdfin.png
+			if(errorlevel = 0)
+			{
+				updatelog("Receiving Gem Dungeon Rewards")
+				mouseclick, l, 300, 500
+				random, int, 1500, 2000
+				sleep, %int%
+				Status := Standby
+			}
+		}
+	}
+}
+
+return
+
+F4::ExitApp
+
+return
+
+F5::Pause
+
+return

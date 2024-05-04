@@ -1,0 +1,65 @@
+; Set the initial GUI state
+Gui, Add, Text, w200, Status: Not Recording
+Gui, Add, Edit, w200 h200 vRecordedText ReadOnly
+
+return
+
+
+; Start recording the keyboard input sequence
+F1::
+    ; Clear the previous recorded sequence
+    recorded_sequence := ""
+
+    ; Set the GUI state to "recording"
+    GuiControl, Text, Status:, Status: Recording...
+
+    ; Start recording the sequence
+    Loop
+    {
+        ; Get the next keystroke
+        Input, key, L1
+
+        ; Stop recording if the user presses Escape
+        if (key = "{Esc}")
+            break
+
+        ; Add the keystroke to the recorded sequence
+        recorded_sequence .= key
+
+        ; Update the recorded text in the GUI
+        GuiControl, Text, RecordedText, %recorded_sequence%
+    }
+
+    ; Set the GUI state to "not recording"
+    GuiControl, Text, Status:, Status: Not Recording
+
+    ; Show the recorded sequence
+    MsgBox, The recorded sequence is:`n%recorded_sequence%
+
+return
+
+
+; Play the recorded sequence with random intervals between each input
+F2::
+    ; Set the minimum and maximum delay between keystrokes in milliseconds
+    min_delay := 50
+    max_delay := 200
+
+    ; Set the GUI state to "playing"
+    GuiControl, Text, Status:, Status: Playing...
+
+    ; Loop through each character in the recorded sequence
+    Loop, Parse, recorded_sequence
+    {
+        ; Send the keystroke
+        Send, %A_LoopField%
+
+        ; Randomly delay before sending the next keystroke
+        Random, delay, min_delay, max_delay
+        Sleep, delay
+    }
+
+    ; Set the GUI state to "not recording"
+    GuiControl, Text, Status:, Status: Not Recording
+
+return

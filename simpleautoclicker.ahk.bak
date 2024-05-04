@@ -1,0 +1,9 @@
+CoordMode, Mouse, Window
+
+F3::
+    Loop{
+    mouseclick, Left
+    sleep, 50
+    }
+
+F4:: ExitApp

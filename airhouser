@@ -1,0 +1,52 @@
+; Set the desired color for the button (replace with the color you're searching for)
+ButtonColor := "0xEF6253"
+
+; Set the search area (replace X1, Y1, X2, and Y2 with the coordinates of the search area)
+SearchArea := "700 550 1200 600"
+
+; Set the file path for the audio alarm (replace with the path of your desired audio file)
+AlarmFile := "C:\Users\bberr\Downloads\Friends.mp3"
+
+CoordMode, Mouse, Window ; Set the mouse coordinates mode to window
+
+A := 0
+
+F2::
+    Sleep, 2000 ; Wait for 2 seconds before starting the macro
+
+    Loop
+    {
+        ; Search for the button with the specified color in the search area
+		Send, {F5}
+		Sleep, 3000 ; Wait for 3 seconds for the page to refresh
+        ImageSearch, FoundX, FoundY, %SearchArea%, *Trans0 %ButtonColor%
+
+		A = A + 1
+
+        ; If the button is found
+        if (ErrorLevel = 0)
+        {
+            ; Click the button
+            MouseClick, left, %FoundX%, %FoundY%
+
+            ; Play the audio alarm and exit the loop
+            SoundPlay, %AlarmFile%
+            Break
+        }
+        else
+        {
+            ; Switch between tabs by clicking the specified coordinates
+			if (A mod 2 = 0)
+			{
+            MouseClick, left, 164, 29
+            Sleep, 500 ; Wait for 1/2 second before clicking the other tab
+			}
+			if (A mod 2 = 1)
+            MouseClick, left, 488, 29
+            Sleep, 500 ; Wait for 1/2 second before searching again
+        }
+    }
+return
+
+Esc::
+    ExitApp

@@ -1,0 +1,12 @@
+#Persistent
+SetTimer, AutoClick, Off
+
+; Start AutoClick when F3 is pressed
+F3::SetTimer, AutoClick, 100
+
+; Stop AutoClick when F4 is pressed
+F4::SetTimer, AutoClick, Off
+
+AutoClick:
+    Click
+return

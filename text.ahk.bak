@@ -1,0 +1,127 @@
+CoordMode, Mouse, Window
+
+L := 0
+
+M := 0
+
+X := 0
+ 
+XButton1::
+{	
+	if(X=0)
+	{
+		X := 1
+		return
+	}
+	if(X=1)
+	{
+		X := 0
+	}
+}
+
+return
+
+XButton2::
+{
+	random, int, 50, 200
+	sleep %int%
+	send {/}
+	random, int, 50, 100
+	sleep %int%
+	send {d}
+	random, int, 50, 100
+	sleep %int%
+	send {p}
+	random, int, 50, 100
+	sleep %int%
+	send {s}
+	random, int, 50, 100
+	sleep %int%
+	send {e}
+	random, int, 50, 100
+	sleep %int%
+	send {j}
+	random, int, 50, 100
+	sleep %int%
+	send {enter}
+	random, int, 50, 100
+	sleep %int%
+}
+
+RButton::
+{
+	if(L=0)
+	{
+		random, int, 50, 100
+		sleep %int%
+		send {LButton down}
+		random, int, 50, 100
+		sleep %int%
+		if(X=0)
+		{
+		send {a down}
+		}
+		if(X=1)
+		{
+		send {d down}
+		}
+		L := 1
+		
+		return
+	}
+	if(L=1)
+	{
+		random, int, 50, 100
+		sleep %int%
+		send {LButton up}
+		random, int, 50, 100
+		sleep %int%
+		if(X=0)
+		{
+		send {a up}
+		}
+		if(X=1)
+		{
+		send {d up}
+		}
+		L := 0
+		
+	}
+	
+}
+
+return
+
+MButton::
+{
+	if(M=0)
+	{
+		random, int, 50, 100
+		sleep %int%
+		send {w down}
+		random, int, 100, 150
+		sleep %int%
+		send {w up}
+		random, int, 100, 150
+		sleep %int%
+		send {w down}
+		M := 1
+		return
+	}
+	if(M=1)
+	{
+		random, int, 50, 100
+		sleep %int%
+		send {w up}
+		M := 0
+	}
+}
+
+return
+
+tab::
+{
+	exitapp
+}
+
+return
